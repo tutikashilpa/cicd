@@ -1,27 +1,4 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        # call ci.sh. The script uses Bazel checkout code from commit hash.
-
-        # Loop through the builders, and build independently.
-        # for d in */; do
-        for d in "$dir"/*; do
-          config="${d}cloudbuild.yaml"
-          #config="cloudbuild.yaml"
-
-          if [[ ! -f "${config}" ]]; then
-            continue
-          fi
-
-          echo "cloudbuild.yaml exists in $dir"
-
-          echo "Building $d ... "
-          (
-          gcloud builds submit $d --config=${config}
-
-          ) &
-          done
-          wait
+  - name: 'gcr.io/cloud-builders/bazel'
+    entrypoint: "bash"
+    args: ['-c', './ci.sh']

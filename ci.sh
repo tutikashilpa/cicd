@@ -51,7 +51,7 @@ buildables=$(bazel query \
 if [[ ! -z $buildables ]]; then
   echo "Building binaries"
   echo "$buildables"
-  bazel build $buildables
+#  bazel build $buildables
 fi
 
 #tests=$(bazel query \
