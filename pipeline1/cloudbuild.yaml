@@ -31,9 +31,11 @@ steps:
   args: ['cp', 'support-files/ref.txt', 'gs://${_COMPOSER_REF_BUCKET}']
   dir: '$REPO_NAME/workflow-dag'
   id: 'deploy-test-ref-file'
+
 - name: gcr.io/cloud-builders/gcloud
   args: ['composer', 'environments', 'run', '${_COMPOSER_ENV_NAME}', '--location', '${_COMPOSER_REGION}','variables', '--', '--set', 'dataflow_jar_file_test', 'dataflow_deployment_$BUILD_ID.jar']
   id: 'set-composer-jar-ref'
+
 - name: gcr.io/cloud-builders/gsutil
   args: ['cp', 'compare_xcom_maps.py', '${_COMPOSER_DAG_BUCKET}']
   dir: '$REPO_NAME/workflow-dag'

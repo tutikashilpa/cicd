@@ -1,10 +1,14 @@
 steps:
-  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
-    entrypoint: "bash"
-    args: ['-c', './ci.sh']
+#  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
+#    entrypoint: "bash"
+#    args: ['-c', './ci.sh']
+
+  - name: gcr.io/cloud-builders/git
+    args: ['clone', 'https://source.developers.google.com/p/$PROJECT_ID/r/github_tutikashilpa_cicd']
+    id: 'check-out-source-code'
 
   - name: 'gcr.io/cloud-solutions-images/apache-airflow:1.10'
     entrypoint: 'python'
     args: ['test_compare_xcom_maps.py']
-    dir: '$REPO_NAME/workflow-dag'
+    dir: 'github_tutikashilpa_cicd/workflow-dag'
     id: 'unit-test-on-operator-code'
