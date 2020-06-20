@@ -26,6 +26,7 @@ steps:
   args: ['cp', 'support-files/input.txt', 'gs://${_COMPOSER_INPUT_BUCKET}']
   dir: '$REPO_NAME/workflow-dag'
   id: 'deploy-test-input-file'
+
 - name: gcr.io/cloud-builders/gsutil
   args: ['cp', 'support-files/ref.txt', 'gs://${_COMPOSER_REF_BUCKET}']
   dir: '$REPO_NAME/workflow-dag'

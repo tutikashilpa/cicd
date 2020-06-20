@@ -36,7 +36,8 @@ echo "$(pwd)"
 files=()
 
 #for file in $(git diff --name-only ${COMMIT_RANGE} ); do
-for file in $(git show --pretty='format:' --name-only $commit_sha);do
+#for file in $(git show --pretty='format:' --name-only $commit_sha);do
+for file in */;do
     files+=($(bazel query $file))
     echo $(bazel query $file)
 done
