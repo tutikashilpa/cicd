@@ -3,9 +3,15 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
+
 RULES_JVM_EXTERNAL_TAG = "3.0"
 RULES_JVM_EXTERNAL_SHA = "62133c125bf4109dfd9d2af64830208356ce4ef8b165a6ef15bbff7460b35c3a"
 
+git_repository(
+    name = "subpar",
+    remote = "https://github.com/google/subpar",
+    tag = "2.0.0",
+)
 
 git_repository(
   name = "repository",
