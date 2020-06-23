@@ -29,5 +29,5 @@
     <option name="Skip Tests" value="false" />
     <pom-list />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="10" project-jdk-type="JavaSDK" />
 </project>
