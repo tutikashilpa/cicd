@@ -31,7 +31,7 @@ buildables=$(bazel query \
     --keep_going \
     --noshow_progress \
     "kind(.*_binary, rdeps(//..., set(${files[*]})))")
-
+echo $buildables
 # Run the tests if there were results
 if [[ ! -z $buildables ]]; then
     echo "Load variables"

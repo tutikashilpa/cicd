@@ -6,7 +6,6 @@ from airflow.models import Variable
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 from airflow.contrib.operators.bigquery_check_operator import BigQueryCheckOperator
 
-
 # Config variables
 dag_config = Variable.get("bigquery_github_trends_variables", deserialize_json=True)
 BQ_CONN_ID = dag_config["bq_conn_id"]
