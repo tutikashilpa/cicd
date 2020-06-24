@@ -6,7 +6,3 @@ par_binary(
     srcs = ["bigquery_github_trends.py"],
     main = "bigquery_github_trends.py"
 )
-
-
-#To clean cache run
-# bazel clean --expunge
