@@ -49,6 +49,12 @@ if [[ ! -z $buildables ]]; then
         bazel build $buildable
     fi
 
+    if [ "$code_type" == "java" ]; then
+        echo "Building par file: $buildables".jar
+        buildable="$buildables".jar
+        bazel build $buildable
+    fi
+
 fi
 
 #tests=$(bazel query \
