@@ -10,6 +10,9 @@ echo $(pwd)
 ## Go to the root of the repo
 #cd "$(git rev-parse --show-toplevel)"
 echo "$(pwd)"
+
+
+
 # Get a list of the current files in package form by querying Bazel.
 files=()
 
@@ -23,18 +26,27 @@ for file in $(git show --pretty='format:' --name-only $commit_sha);do
 
 done
 
-echo "out of loop"
 # Query for the associated buildables
 buildables=$(bazel query \
     --keep_going \
     --noshow_progress \
     "kind(.*_binary, rdeps(//..., set(${files[*]})))")
-echo "out of builables"
+
 # Run the tests if there were results
 if [[ ! -z $buildables ]]; then
-  echo "Building binaries"
-  echo "$buildables"
-#  bazel build $buildables
+    echo "Load variables"
+    ./load_var.sh
+
+    echo "check source code type"
+    code_type=$(./check_source_file.sh "$buildables")
+    echo $code_type
+
+    if [ "$code_type" == "python" ]; then
+        echo "Building par file: $buildables".par
+        buildable="$buildables".par
+        bazel build $buildable
+    fi
+
 fi
 
 #tests=$(bazel query \
