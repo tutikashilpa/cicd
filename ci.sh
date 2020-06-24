@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 echo $(pwd)
+chmod +x /load_var.sh
+chmod +x /check_source_file.sh
 
 #COMMIT_RANGE=${COMMIT_RANGE:-$(git merge-base origin/master HEAD)".."}
 #commit_sha=$(git rev-parse HEAD)
