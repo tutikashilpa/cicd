@@ -13,6 +13,15 @@ git_repository(
     tag = "2.0.0",
 )
 
+load("@rules_python//python:pip.bzl", "pip3_import")
+# Create a central repo that knows about the dependencies needed for
+# requirements.txt.
+pip3_import(   # or pip3_import
+   name = "my_deps",
+   requirements = "//:par_example/requirements.txt",
+   timeout = 3600,
+)
+
 git_repository(
   name = "repository",
   remote = "https://github.com/pupamanyu/cicd.git",
