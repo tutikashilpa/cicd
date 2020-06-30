@@ -1,4 +1,4 @@
-
+package(default_visibility = ["//visibility:public"])
 load("@my_deps//:requirements.bzl", "requirement")
 load("@subpar//:subpar.bzl", "par_binary")
 
