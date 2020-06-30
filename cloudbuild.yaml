@@ -1,7 +1,7 @@
 steps:
-#  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
-#    entrypoint: "bash"
-#    args: ['-c', './ci.sh']
+  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
+    entrypoint: "bash"
+    args: ['-c', './ci.sh']
 
 #  - name: gcr.io/cloud-builders/git
 #    args: ['clone', 'https://source.developers.google.com/p/$PROJECT_ID/r/github_tutikashilpa_cicd']
@@ -13,9 +13,9 @@ steps:
 #    dir: 'github_tutikashilpa_cicd/workflow-dag'
 #    id: 'unit-test-on-operator-code'
 
-  - name: gcr.io/cloud-builders/gcloud
-    args: ['composer', 'environments', 'run', '${_COMPOSER_ENV_NAME}', '--location', 'us-central1','variables', '--', '--set', 'dataflow_jar_file_test', 'dataflow_deployment_$BUILD_ID.jar']
-    id: 'set-composer-jar-ref'
+#  - name: gcr.io/cloud-builders/gcloud
+#    args: ['composer', 'environments', 'run', '${_COMPOSER_ENV_NAME}', '--location', 'us-central1','variables', '--', '--set', 'dataflow_jar_file_test', 'dataflow_deployment_$BUILD_ID.jar']
+#    id: 'set-composer-jar-ref'
 
 
 #    gcloud builds submit --config=build_deploy_test.yaml --substitutions=\
