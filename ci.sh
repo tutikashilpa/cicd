@@ -45,7 +45,7 @@ if [[ ! -z $buildables ]]; then
 
     if [ "$code_type" == "python" ]; then
         echo "Building par file: $buildables".par
-        buildable="$buildables".par
+        buildable="$buildables"
         bazel build $buildable
     fi
 

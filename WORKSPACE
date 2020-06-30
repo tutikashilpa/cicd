@@ -19,26 +19,26 @@ git_repository(
     commit = "748aa53d7701e71101dfd15d800e100f6ff8e5d1"
 )
 
-load("@rules_python//python:pip.bzl", "pip3_import")
-# Create a central repo that knows about the dependencies needed for
-# requirements.txt.
-pip3_import(   # or pip3_import
-   name = "my_deps",
-   requirements = "//par_example:requirements.txt",
-   timeout = 3600,
-)
+#load("@rules_python//python:pip.bzl", "pip3_import")
+## Create a central repo that knows about the dependencies needed for
+## requirements.txt.
+#pip3_import(   # or pip3_import
+#   name = "my_deps",
+#   requirements = "//par_example:requirements.txt",
+#   timeout = 3600,
+#)
+#
+## Load the central repo's install function from its `//:requirements.bzl` file,
+## and call it.
+#load("@my_deps//:requirements.bzl", "pip_install")
+#pip_install()
 
-# Load the central repo's install function from its `//:requirements.bzl` file,
-# and call it.
-load("@my_deps//:requirements.bzl", "pip_install")
-pip_install()
-
-git_repository(
-  name = "repository",
-  remote = "https://github.com/pupamanyu/cicd.git",
-  commit = "30989756259d7bce8d187e2cbf232f502c68d6b8",
-  tag = "v2",
-)
+#git_repository(
+#  name = "repository",
+#  remote = "https://github.com/pupamanyu/cicd.git",
+#  commit = "30989756259d7bce8d187e2cbf232f502c68d6b8",
+#  tag = "v2",
+#)
 
 http_archive(
     name = "rules_jvm_external",

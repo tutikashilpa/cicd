@@ -15,7 +15,7 @@ BQ_DATASET = dag_config["bq_dataset"]
 default_args = {
     'owner': 'airflow',
     'depends_on_past': True,    
-    'start_date': datetime(2018, 12, 2),
+    'start_date': datetime(2018, 12, 1),
     'end_date': datetime(2018, 12, 5),
     'email': ['airflow@airflow.com'],
     'email_on_failure': True,
