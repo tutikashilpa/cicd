@@ -24,7 +24,7 @@ load("@rules_python//python:pip.bzl", "pip3_import")
 # requirements.txt.
 pip3_import(   # or pip3_import
    name = "my_deps",
-   requirements = "//:requirements.txt",
+   requirements = "//par_example:requirements.txt",
    timeout = 3600,
 )
 
