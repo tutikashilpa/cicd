@@ -50,8 +50,8 @@ if [[ ! -z $buildables ]]; then
     fi
 
     if [ "$code_type" == "java" ]; then
-        echo "Building par file: $buildables".jar
-        buildable="$buildables".jar
+        echo "Building jar file: $buildables".jar
+        buildable="$buildables"_deploy.jar
         bazel build $buildable
     fi
 
