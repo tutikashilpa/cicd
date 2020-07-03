@@ -1,4 +1,6 @@
 import psutil
+import lib1.libapp
+
 
 def main():
     print(psutil.cpu_times())
