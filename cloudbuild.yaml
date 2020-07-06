@@ -1,7 +1,11 @@
 steps:
-  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
-    entrypoint: "bash"
-    args: ['-c', './ci.sh']
+  - name: gcr.io/cloud-builders/npm
+    args: ['publish', "bazel-bin/bigquery_pipeline/package.tar.bz2"]
+
+#steps:
+#  - name: 'gcr.io/cloud-marketplace-containers/google/bazel'
+#    entrypoint: "bash"
+#    args: ['-c', './ci.sh']
 #  - name: gcr.io/cloud-builders/git
 #    args: ['clone', 'https://source.developers.google.com/p/$PROJECT_ID/r/github_tutikashilpa_cicd']
 #    id: 'check-out-source-code'
