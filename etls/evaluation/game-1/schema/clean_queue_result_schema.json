@@ -1,0 +1,79 @@
+{
+  "clustering": {
+    "fields": [
+      "puuid"
+    ]
+  },
+  "id": "xxxxxxxxxxxxx:xxxxxx.xxxxxxxxxxxxxxxxxx",
+  "kind": "bigquery#table",
+  "labels": {
+    "org_unit": "development"
+  },
+  "location": "US",
+  "schema": {
+    "fields": [
+      {
+        "name": "game_id",
+        "type": "STRING"
+      },
+      {
+        "name": "realm_id",
+        "type": "STRING"
+      },
+      {
+        "name": "puuid",
+        "type": "STRING"
+      },
+      {
+        "name": "is_ai",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "queue_name",
+        "type": "STRING"
+      },
+      {
+        "name": "queue_outcome",
+        "type": "STRING"
+      },
+      {
+        "name": "queue_timestamp_utc",
+        "type": "STRING"
+      },
+      {
+        "name": "queue_duration_seconds",
+        "type": "INTEGER"
+      },
+      {
+        "name": "mmr",
+        "type": "INTEGER"
+      },
+      {
+        "name": "runtime_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "deployment",
+        "type": "STRING"
+      },
+      {
+        "name": "datacenter",
+        "type": "STRING"
+      },
+      {
+        "name": "partition_date",
+        "type": "DATE"
+      }
+    ]
+  },
+  "tableReference": {
+    "datasetId": "xxxxxx",
+    "projectId": "xxxxxxxxxxxxx",
+    "tableId": "xxxxxxxxxxxxxxxxxx"
+  },
+  "timePartitioning": {
+    "field": "partition_date",
+    "type": "DAY"
+  },
+  "type": "TABLE"
+}
