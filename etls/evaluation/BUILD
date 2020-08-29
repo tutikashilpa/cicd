@@ -18,7 +18,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_deb", "pkg_tar")
 
 pkg_tar(
     name = "game-event-dag",
-    srcs = ["//etls/evaluation:game-1/xxxxxxxxxx"],
+    srcs = ["//etls/evaluation:game-1/game_event"],
     extension = "tar.bz2",
 )
 
@@ -43,7 +43,7 @@ genrule(
    outs = ["version.txt"],
    cmd = """
         EXECPATH=$$(pwd)
-        cd /workspace/cicd
+        cd $${build_bazel_workspace}
         COMMIT="$$(git rev-parse HEAD)"
         BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
@@ -51,3 +51,6 @@ genrule(
         echo -e $${BRANCH}_$${COMMIT} > VERSIONTXT > $@
         """
 )
+
+#cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+        
