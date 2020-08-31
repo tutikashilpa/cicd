@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package examples.proto;
+
+option java_package = "com.riotgames.proto.examples";
+option java_multiple_files = true;
+
+message GameMessage {
+  int64 game_id = 1;
+  string game_mode = 2;
+  int64 timestamp = 3;
+}

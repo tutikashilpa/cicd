@@ -30,12 +30,27 @@ pkg_deb(
     depends = [
         "zlib1g-dev",
         "unzip",
-        ":bash-completion",
+        ":bash-completion"
     ],
     description = "Game Event End to End ETL",
     maintainer = "dev@riotgames.com",
     package = "game-event",
     version_file = ":version.txt",
+#    version = "VERSION",
+)
+
+
+genrule(
+    name = 'package_game_event_deb_file',
+    srcs = ['//etls/evaluation:game-event'],
+    outs = ['deb/game-event.deb'],
+    cmd = """
+    cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+    COMMIT="$$(git rev-parse HEAD)"
+    BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
+    mv bazel-bin/etls/evaluation/game-event.deb bazel-bin/etls/evaluation/game-event_$${BRANCH}_$${COMMIT}.deb && cp bazel-bin/etls/evaluation/game.deb $@
+    """
+
 )
 
 genrule(
@@ -43,8 +58,7 @@ genrule(
    outs = ["version.txt"],
    cmd = """
         EXECPATH=$$(pwd)
-        source /workspace/build-utils/set_vars
-        cd $${build_bazel_workspace}
+        cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
         COMMIT="$$(git rev-parse HEAD)"
         BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
@@ -53,4 +67,13 @@ genrule(
         """
 )
 
-#cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+#genrule(
+#    name = "copy_file",
+#    srcs = ["//etls/evaluation:game-event"],
+#    outs = [ 'deb/game-event'],
+#    cmd = """
+#    cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+#    mv bazel-bin/etls/evaluation/game-event.deb bazel-bin/etls/evaluation/test.deb && cp bazel-bin/etls/evaluation/game-event.deb $(@D)
+#    """,
+#    output_to_bindir = 1,
+#)
