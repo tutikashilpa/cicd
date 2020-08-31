@@ -24,6 +24,7 @@ from airflow.operators.python_operator import PythonOperator, BranchPythonOperat
 
 from google.cloud import storage, bigquery
 
+
 def if_tbl_exists(dataset,project,table_name):
     from google.cloud.exceptions import NotFound
     client = bigquery.Client()
