@@ -15,9 +15,7 @@
 
 EXECPATH=$(pwd)
 BAZEL_WORKSPACE=${1}
-echo $(pwd)
 cd ${BAZEL_WORKSPACE}
-echo $(pwd)
 ARTIFACTBUCKET=${2}
 ARTIFACTDIR=${3}
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"

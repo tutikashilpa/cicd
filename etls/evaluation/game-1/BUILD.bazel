@@ -57,6 +57,7 @@ pkg_deb(
 #    visibility = ["//visibility:public"],
 #)
 
+
 genrule(
    name = "embeded_label",
    outs = ["version.txt"],
