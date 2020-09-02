@@ -37,24 +37,25 @@ pkg_deb(
     maintainer = "dev@riotgames.com",
     package = "game-event",
     version_file = ":version.txt",
+    visibility = ["//visibility:public"],
 #    version = "VERSION",
 )
 
 
-genrule(
-    name = 'package_game_event_deb_file',
-    srcs = ['//etls/evaluation/game-1:game-event'],
-    outs = ['deb'],
-    cmd = """
-
-    source /workspace/build-utils/build_env_vars
-    cd $${build_bazel_workspace}
-    COMMIT="$$(git rev-parse HEAD)"
-    BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
-    mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp bazel-bin/etls/evaluation/game-1/game-event.deb $(@D)/deb && mv bazel-bin/etls/evaluation/game-1/deb/game-event bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb
-    """,
-    visibility = ["//visibility:public"],
-)
+#genrule(
+#    name = 'package_game_event_deb_file',
+#    srcs = ['//etls/evaluation/game-1:game-event'],
+#    outs = ['deb'],
+#    cmd = """
+#
+#    source /workspace/build-utils/build_env_vars
+#    cd $${build_bazel_workspace}
+#    COMMIT="$$(git rev-parse HEAD)"
+#    BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
+#    mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp bazel-bin/etls/evaluation/game-1/game-event.deb $(@D)/deb && mv bazel-bin/etls/evaluation/game-1/deb/game-event bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb
+#    """,
+#    visibility = ["//visibility:public"],
+#)
 
 genrule(
    name = "embeded_label",
