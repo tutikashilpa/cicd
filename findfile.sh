@@ -1,7 +1,3 @@
-#!/usr/bin/env bash
-
-files=()
-targets=()
 for file in $(git show --pretty='format:' --name-only $commit_sha);do
 #for file in */;do
   dir=$(dirname "${file}")
