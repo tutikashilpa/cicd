@@ -51,7 +51,7 @@ genrule(
     cd $${build_bazel_workspace}
     COMMIT="$$(git rev-parse HEAD)"
     BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
-    mv bazel-bin/etls/evaluation/game-1/game-event.deb bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb && mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp -R bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb $(@D)/deb
+    mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp bazel-bin/etls/evaluation/game-1/game-event.deb $(@D)/deb && mv bazel-bin/etls/evaluation/game-1/deb/game-event bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb
     """,
     visibility = ["//visibility:public"],
 )
