@@ -1,3 +1,8 @@
+cd $${build_bazel_workspace}
+
+files
+targets
+
 for file in $(git show --pretty='format:' --name-only $commit_sha);do
 #for file in */;do
   dir=$(dirname "${file}")
