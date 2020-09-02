@@ -37,7 +37,8 @@ copy_artifact_to_gcs() {
     done
 
     echo "renamed... "
-    gsutil -m cp ${ARTIFACTDIR}/${PREFIX}.deb ${ARTIFACTBUCKET}
+    gsutil ls -b ${ARTIFACTBUCKET} || gsutil mb -l us-central1 ${ARTIFACTBUCKET}
+    gsutil -m cp ${ARTIFACTDIR}/${PREFIX} ${ARTIFACTBUCKET}
     echo "upload to gcs complete... "
 }
 
