@@ -9,15 +9,11 @@ for file in $(git show --pretty='format:' --name-only $commit_sha);do
 
   while true
   do
-    echo "dir is $dir"
     lines=$(find ${dir} -name "BUILD.bazel"  | wc -l)
     if [ $lines -eq 0 ]; then
-      echo " Empty ... $dir"
       dir=$(dirname "${dir}")
     else
-      echo "not empty ..."
       target=$dir
-      echo "target is $target"
       break
     fi
   done
@@ -40,7 +36,7 @@ if [[ ! -z $buildables ]]; then
 #    echo "Load variables"
 #    ./load_var.sh ${targets}
 
-    source /workspace/build-utils/build_env_vars && bazel build $buildables --verbose_failures
+    bazel build $buildables --verbose_failures
     echo "bazel build completed successfully"
 fi
 
