@@ -32,7 +32,7 @@ copy_artifact_to_gcs() {
     echo ${ARTIFACTDIR}
 
     for f in ${ARTIFACTDIR}/*.deb; do
-      mv "$f" ${ARTIFACTDIR}/${PREFIX}.deb
+      mv "$f" ${ARTIFACTDIR}/${PREFIX}
       break
     done
 
