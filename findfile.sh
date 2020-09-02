@@ -1,4 +1,4 @@
-cd $${build_bazel_workspace}
+cd ${1}
 
 files
 targets
