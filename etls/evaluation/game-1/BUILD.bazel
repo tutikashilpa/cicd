@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+#package(default_visibility = ["//visibility:public"])
+#package(default_visibility = ["BUILD_PACKAGE_VISIBILITY"])
 
 load("@rules_pkg//:pkg.bzl", "pkg_deb", "pkg_tar")
 
 pkg_tar(
     name = "game-event-dag",
-    srcs = ["//etls/evaluation:game-1/game_event"],
+    srcs = ["//etls/evaluation/game-1:game_event"],
     extension = "tar.bz2",
 )
 
@@ -42,15 +43,16 @@ pkg_deb(
 
 genrule(
     name = 'package_game_event_deb_file',
-    srcs = ['//etls/evaluation:game-event'],
-    outs = ['deb/game-event.deb'],
+    srcs = ['//etls/evaluation/game-1:game-event'],
+    outs = ['deb'],
     cmd = """
+
     cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
     COMMIT="$$(git rev-parse HEAD)"
     BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
-    mv bazel-bin/etls/evaluation/game-event.deb bazel-bin/etls/evaluation/game-event_$${BRANCH}_$${COMMIT}.deb && cp bazel-bin/etls/evaluation/game.deb $@
-    """
-
+    mv bazel-bin/etls/evaluation/game-1/game-event.deb bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb && mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp -R bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb $(@D)/deb
+    """,
+    visibility = ["//visibility:public"],
 )
 
 genrule(
@@ -58,7 +60,8 @@ genrule(
    outs = ["version.txt"],
    cmd = """
         EXECPATH=$$(pwd)
-        cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+        source build_env_vars
+        cd $${build_bazel_workspace}
         COMMIT="$$(git rev-parse HEAD)"
         BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
@@ -66,6 +69,8 @@ genrule(
         echo -e $${BRANCH}_$${COMMIT} > VERSIONTXT > $@
         """
 )
+#> $@
+#cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
 
 #genrule(
 #    name = "copy_file",

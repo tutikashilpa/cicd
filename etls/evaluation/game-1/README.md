@@ -20,7 +20,7 @@ This folder holds build scripts and environment setup scripts.
 
 Please refer the below diagram for source code structure.
    
-![](img/code_structure.png)
+![](../img/code_structure.png)
 
 #The CI/CD pipeline
 At a high level, the CI/CD pipeline consists of the following steps:
@@ -39,7 +39,7 @@ At a high level, the CI/CD pipeline consists of the following steps:
 12. Airflow updates the DAG, and runs the Data Processing as per the DAG configuration.
 
 The following diagram shows a detailed view of the CI/CD pipeline steps.
-![](img/BigQuery_CICD.png)
+![](../img/BigQuery_CICD.png)
 
 ## The data-processing workflow
 
@@ -50,5 +50,5 @@ The Stage CI/CD pipeline automatically deploys the DAG definition from git Repos
 In the DAG definition for the test environment, an end-to-end test step is defined in addition to the data-processing workflow. The test step helps make sure that the data-processing workflow runs correctly.
 
 The data-processing workflow is illustrated in the following diagram.
-![](img/game_event.png)
+![](../img/game_event.png)
 
