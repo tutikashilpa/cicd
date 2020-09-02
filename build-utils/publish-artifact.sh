@@ -22,8 +22,8 @@ ARTIFACTBUCKET=${2}
 ARTIFACTDIR=${3}
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 COMMIT_SHA=$(git rev-parse HEAD)
-ARTIFACT="game-event.deb"
-RENAMED="xxxxxxxxxx_${BRANCH_NAME}_${COMMIT_SHA}.deb"
+#ARTIFACT="game-event.deb"
+PREFIX="${BRANCH_NAME}_${COMMIT_SHA}.deb"
 ARTIFACTREPO=${4}
 REGION=${5}
 
@@ -31,10 +31,14 @@ copy_artifact_to_gcs() {
 #    cd  ${EXECPATH}
     echo ${ARTIFACTDIR}
 
-    mv ${ARTIFACTDIR}/${ARTIFACT} ${ARTIFACTDIR}/${RENAMED}
+    for f in ${ARTIFACTDIR}/*.deb; do
+      mv "$f" ${ARTIFACTDIR}/${PREFIX}.deb
+      break
+    done
+
     echo "renamed... "
-    gsutil -m cp ${ARTIFACTDIR}/${RENAMED} ${ARTIFACTBUCKET}
-    echo "upload to gcs ... "
+    gsutil -m cp ${ARTIFACTDIR}/${PREFIX}.deb ${ARTIFACTBUCKET}
+    echo "upload to gcs complete... "
 }
 
 upload_deb_artifact() {

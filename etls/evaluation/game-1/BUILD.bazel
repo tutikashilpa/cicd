@@ -25,20 +25,20 @@ pkg_tar(
 
 pkg_deb(
     name = "game-event",
-    architecture = "amd64",
-    built_using = "unzip (6.0.1)",
+#    architecture = "amd64",
+#    built_using = "unzip (6.0.1)",
     data = ":game-event-dag",
     depends = [
         "zlib1g-dev",
         "unzip",
-        ":bash-completion"
+        ":bash-completion",
     ],
     description = "Game Event End to End ETL",
     maintainer = "dev@riotgames.com",
     package = "game-event",
     version_file = ":version.txt",
     visibility = ["//visibility:public"],
-#    version = "VERSION",
+#    version = ":game-event-name"
 )
 
 
@@ -64,6 +64,7 @@ genrule(
         EXECPATH=$$(pwd)
         source /workspace/build-utils/build_env_vars
         cd $${build_bazel_workspace}
+        # cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
         COMMIT="$$(git rev-parse HEAD)"
         BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
@@ -84,3 +85,4 @@ genrule(
 #    """,
 #    output_to_bindir = 1,
 #)
+
