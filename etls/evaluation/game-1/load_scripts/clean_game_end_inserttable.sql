@@ -20,6 +20,7 @@ WHERE
 CREATE TEMP FUNCTION
   previous_partition_date(dt STRING) AS ( DATE_SUB(PARSE_DATE('%Y-%m-%d',
         dt), INTERVAL 1 DAY) );
+
 INSERT
     `xxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxx` (game_id,
                                                            realm_id,

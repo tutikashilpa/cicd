@@ -45,13 +45,14 @@ upload_deb_artifact() {
     echo "upload deb artifact to Artifact registry ... "
     gcloud alpha artifacts packages import ${ARTIFACTREPO} --quiet \
         --location=${REGION} \
-        --gcs-source=${ARTIFACTBUCKET}/${ARTIFACT} &&
+        --gcs-source=${ARTIFACTBUCKET}/${PREFIX} &&
         return 0
 }
 
 publish_deb_artifact() {
     # Publish .deb  artifact
-    copy_artifact_to_gcs && upload_deb_artifact
+    copy_artifact_to_gcs
+#    && upload_deb_artifact
 }
 
 
