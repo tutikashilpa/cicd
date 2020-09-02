@@ -15,7 +15,7 @@ Expected Output: Delete existing date partitioned data.
 
 #  Remove existing date partitioned data before insert.
 DELETE
-    `xxxxxxxxxxxxx.xxxxxx.xxxxxxxxxx`
+    `xxxxxxxxxxxxx.xxxxxx.xxxxxxxxxx` 
 WHERE PARTITION_DATE = @dt_value;
 
 CREATE TEMP FUNCTION get_delta(start_time STRING, end_time STRING) AS (
