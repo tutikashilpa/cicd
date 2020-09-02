@@ -37,10 +37,12 @@ buildables=$(bazel query \
 echo "Buildables .... $buildables"
 
 if [[ ! -z $buildables ]]; then
-    echo "Load variables"
-    ./load_var.sh ${targets}
+#    echo "Load variables"
+#    ./load_var.sh ${targets}
 
     bazel build $buildables
+    echo "bazel build completed successfully"
+fi
 
 #    echo "check source code type"
 #    code_type=$(./check_source_file.sh "$buildables")
@@ -60,7 +62,7 @@ if [[ ! -z $buildables ]]; then
 #        echo ${pwd}
 #    fi
 
-fi
+
 
 #build_path=$(bazel query 'attr(visibility, "BUILD_VISIBILITY",//etls/evaluation/game-1:*)')
 #echo $build_path
