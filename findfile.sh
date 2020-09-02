@@ -39,23 +39,25 @@ if [[ ! -z $buildables ]]; then
     echo "Load variables"
     ./load_var.sh ${targets}
 
-    echo "check source code type"
-    code_type=$(./check_source_file.sh "$buildables")
-    echo $code_type
+    bazel build $buildables
 
-    if [ "$code_type" == "python" ]; then
-        echo "Building par file: $buildables".par
-        buildable="$buildables"
-        echo "buildables is $buildables"
-        bazel build $buildable
-    fi
-
-    if [ "$code_type" == "java" ]; then
-        echo "Building jar file: $buildables".jar
-        buildable="$buildables"_deploy.jar
-        bazel build $buildable
-        echo ${pwd}
-    fi
+#    echo "check source code type"
+#    code_type=$(./check_source_file.sh "$buildables")
+#    echo $code_type
+#
+#    if [ "$code_type" == "python" ]; then
+#        echo "Building par file: $buildables".par
+#        buildable="$buildables"
+#        echo "buildables is $buildables"
+#        bazel build $buildable
+#    fi
+#
+#    if [ "$code_type" == "java" ]; then
+#        echo "Building jar file: $buildables".jar
+#        buildable="$buildables"_deploy.jar
+#        bazel build $buildable
+#        echo ${pwd}
+#    fi
 
 fi
 
