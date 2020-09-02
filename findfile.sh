@@ -40,7 +40,7 @@ if [[ ! -z $buildables ]]; then
 #    echo "Load variables"
 #    ./load_var.sh ${targets}
 
-    bazel build $buildables
+    source /workspace/build-utils/build_env_vars && bazel build $buildables --verbose_failures
     echo "bazel build completed successfully"
 fi
 
