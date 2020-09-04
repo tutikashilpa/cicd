@@ -19,7 +19,6 @@ DELETE
 WHERE PARTITION_DATE = @dt_value;
 
 
-
 CREATE TEMP FUNCTION get_delta(start_time STRING, end_time STRING) AS (
     CAST(ABS(TIMESTAMP_DIFF(TIMESTAMP(start_time) , TIMESTAMP(end_time), SECOND)) AS INT64)
     );
