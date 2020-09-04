@@ -16,3 +16,4 @@ deploy_artifact_to_dags_dir() {
   echo "Extract complete... "
 }
 
+deploy_artifact_to_dags_dir()
