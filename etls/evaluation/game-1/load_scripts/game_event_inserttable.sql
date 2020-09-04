@@ -11,7 +11,6 @@ Input: Date
 Expected Output: Delete existing date partitioned data.
                  Populate game event data for date partition.
 */
-
 #  Remove existing date partitioned data before insert.
 DELETE
     `xxxxxxxxxxxxx.xxxxxx.xxxxxxxxxx`

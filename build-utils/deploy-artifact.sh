@@ -7,6 +7,7 @@ cd ${BAZEL_WORKSPACE}
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 COMMIT_SHA=$(git rev-parse HEAD)
 ARTIFACT=${ARTIFACTDIR}/${BRANCH_NAME}_${COMMIT_SHA}.deb
+echo "artifact ${ARTIFACT}"
 
 deploy_artifact_to_dags_dir() {
   tar -xvf ${ARTIFACT} data.tar.bz2 &&
