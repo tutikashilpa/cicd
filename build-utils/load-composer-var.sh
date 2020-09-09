@@ -11,7 +11,7 @@ cd {1}
 COMPOSER_DATA_FOLDER={2}
 COMPOSER_NAME={3}
 COMPOSER_LOCATION={4}
-ENV_VARIABLES_JSON_FILE="etls/evaluation/game-1/game-event/workflow-dag/config/variables.json"
+ENV_VARIABLES_JSON_FILE="/etls/evaluation/game-1/game-event/workflow-dag/config/variables.json"
 echo $COMPOSER_DATA_FOLDER
 echo $COMPOSER_NAME
 COMPOSER_GCS_BUCKET={5}

@@ -131,7 +131,7 @@ steps:
       - |
         # Read environment variables from disk
         source /workspace/build-utils/build-env-vars &&
-        sh $build_repo_name/build-utils/load-composer-var.sh $build_workspace $build_composer_data_folder $build_staging_composer_env_name $build_staging_composer_region
+        sh $build_repo_name/build-utils/load-composer-var.sh $build_workspace $build_composer_data_folder $build_staging_composer_env_name $build_staging_composer_region $build_staging_composer_dag_bucket
     id: 'set-composer-variables'
 
 #
