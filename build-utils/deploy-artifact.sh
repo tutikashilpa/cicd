@@ -10,6 +10,7 @@ ARTIFACT=${ARTIFACTDIR}/${BRANCH_NAME}_${COMMIT_SHA}.deb
 echo "artifact ${ARTIFACT}"
 
 deploy_artifact_to_dags_dir() {
+  gsutil cp gs://BUCKET_NAME/OBJECT_NAME SAVE_TO_LOCATION
   tar -xvf ${ARTIFACT} data.tar.bz2 &&
   mkdir ./extract &&
   tar -xf data.tar.bz2 -C ./extract/ &&

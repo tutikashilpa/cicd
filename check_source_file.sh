@@ -8,7 +8,7 @@ function find_source_code_type()
     #buildables="//bigquery_pipeline:bigquery_github_trends"
     local __buildable=$1
     filename=${__buildable#*//}
-    FILE=${filename%%:*}/BUILD
+    FILE=${filename%%:*}/BUILD.bazel
 #    echo "Build file: $FILE"
 
     if [[ ! -z $(grep $py_source $FILE) ]]; then

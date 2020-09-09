@@ -20,8 +20,7 @@ ARTIFACTBUCKET=${2}
 ARTIFACTDIR=${3}
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 COMMIT_SHA=$(git rev-parse HEAD)
-#ARTIFACT="game-event.deb"
-PREFIX="${BRANCH_NAME}_${COMMIT_SHA}.deb"
+ARTIFACTNAME="${BRANCH_NAME}_${COMMIT_SHA}.deb"
 ARTIFACTREPO=${4}
 REGION=${5}
 
@@ -30,13 +29,13 @@ copy_artifact_to_gcs() {
     echo ${ARTIFACTDIR}
 
     for f in ${ARTIFACTDIR}/*.deb; do
-      mv "$f" ${ARTIFACTDIR}/${PREFIX}
+      mv "$f" ${ARTIFACTDIR}/${ARTIFACTNAME}
       break
     done
 
     echo "renamed... "
     gsutil ls -b ${ARTIFACTBUCKET} || gsutil mb -l us-central1 ${ARTIFACTBUCKET}
-    gsutil -m cp ${ARTIFACTDIR}/${PREFIX} ${ARTIFACTBUCKET}
+    gsutil -m cp ${ARTIFACTDIR}/${ARTIFACTNAME} ${ARTIFACTBUCKET}
     echo "upload to gcs complete... "
 }
 
@@ -45,7 +44,7 @@ upload_deb_artifact() {
     echo "upload deb artifact to Artifact registry ... "
     gcloud alpha artifacts packages import ${ARTIFACTREPO} --quiet \
         --location=${REGION} \
-        --gcs-source=${ARTIFACTBUCKET}/${PREFIX} &&
+        --gcs-source=${ARTIFACTBUCKET}/${ARTIFACTNAME} &&
         return 0
 }
 

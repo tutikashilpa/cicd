@@ -13,33 +13,38 @@
 # limitations under the License.
 #
 
+
+
 steps:
-
-  - name: "gcr.io/cloud-builders/curl"
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
     entrypoint: /bin/bash
+    dir: /workspace/$REPO_NAME
     args:
-      - -c
-      - |
-        # source environment variables
-        export build_repo_name="cicd" &&
-        export build_branch_name="test" &&
-        export build_bazel_workspace=/workspace/${build_repo_name} &&
-        export build_staging_gcp_project_id="$(gcloud config list --format 'value(core.project)')" &&
-        export build_staging_project_number="$(gcloud projects describe '${build_staging_gcp_project_id}' --format='get(build_staging_project_number)')" &&
-        export build_staging_composer_env_name="staging-data-pipeline-composer3" &&
-        export build_staging_composer_region="us-central1" &&
-        export build_result_bucket_region="${build_composer_region}" &&
-        export build_composer_zone_id="us-central1-a" &&
-        export build_staging_composer_dag_bucket=$(gcloud composer environments describe build_staging_composer_env_name --location build_composer_region --format='get(config.dagGcsPrefix)') &&
-        export build_staging_composer_service_account=$(gcloud composer environments describe build_staging_composer_env_name --location $build_staging_composer_region --format='get(config.nodeConfig.serviceAccount)') &&
-        export build_composer_dag_name_test="test_game-1_game_event" &&
-        export build_artifactbucket="gs://game-1/staging/game-event/" &&
-        export build_artifactdir="${build_bazel_workspace}/bazel-bin/etls/evaluation" &&
-        export build_artifactrepo="artifact-repo" &&
-        export build_artifact_repo_region="us-central1" &&
+    - -c
+    - |
+      # source environment variables
+      echo $(pwd)
+      export build_repo_name="$REPO_NAME" &&
+      export build_branch_name="$BRANCH_NAME" &&
+      export build_git_url="https://github.com/tutikashilpa/$build_repo_name"
+      export build_commit="$(git rev-parse $build_branch_name)" &&
+      export build_bazel_workspace=/workspace/${build_repo_name} &&
+      export build_staging_gcp_project_id="$(gcloud config list --format 'value(core.project)')" &&
+      export build_artifactbucket="gs://$build_staging_gcp_project_id/$build_branch_name_$build_commit" &&
+      export build_artifactdir="${build_bazel_workspace}/bazel-bin/etls/evaluation/game-1" &&
+      export build_artifactrepo="artifact-repo" &&
+      export build_artifactrepo_region="us-central1" &&
+      export build_staging_composer_env_name="staging-env" &&
+      export build_staging_composer_region="us-central1" &&
+      export build_staging_composer_dag_bucket=$(gcloud composer environments describe $build_staging_composer_env_name --location $build_staging_composer_region --format='get(config.dagGcsPrefix)') &&
+      # export build_staging_composer_service_account=$(gcloud composer environments describe $build_staging_composer_env_name --location $build_staging_composer_region --format='get(config.nodeConfig.serviceAccount)') &&
+      # export build_composer_dag_name_test="test_game-1_game_event" &&
+      # export build_staging_project_number="$(gcloud projects describe '${build_staging_gcp_project_id}' --format='get(build_staging_project_number)')" &&
+      # export build_result_bucket_region="${build_composer_region}" &&
+      # export build_composer_zone_id="us-central1-a" &&
 
-        # write all "build_" variables to the persistent volume "/workspace"
-        env | grep "^build_" > /workspace/build-utils/set_vars
+      # write all "build_" variables to the persistent volume "/workspace"
+      env | grep "^build_" > /workspace/build-utils/build-env-vars
     id: "source-environment-variables"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
@@ -47,84 +52,122 @@ steps:
     args:
       - -c
       - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        git clone --single-branch --branch $build_branch_name https://github.com/pupamanyu/$build_repo_name
+        source /workspace/build-utils/build-env-vars &&
+        git clone --single-branch --branch $build_branch_name $build_git_url
     id: 'check-out-source-code'
 
-  - name: "gcr.io/cloud-builders/bazel:latest"
-    args: [
-      'build', '//etls/evaluation:game-event',"--verbose_failures",
-    ]
+#  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
+#    entrypoint: /bin/bash
+#    dir: /workspace/$REPO_NAME
+#    args:
+#      - -c
+#      - |
+#        # source environment variables
+#        echo $(pwd)
+#        export build_repo_name="cicd" &&
+#        export build_branch_name="$(git rev-parse --abbrev-ref HEAD)" &&
+#        export build_commit="$(git rev-parse HEAD)" &&
+#        export build_bazel_bin="$(bazel info bazel-bin)" &&
+#        export build_bazel_workspace="$(bazel info workspace)" &&
+#        export build_staging_gcp_project_id="$(gcloud config list --format 'value(core.project)')" &&
+#        export build_artifactbucket="gs://$build_staging_gcp_project_id/$build_branch_name_$build_commit" &&
+#        export build_artifactdir="${build_bazel_workspace}/bazel-bin/etls/evaluation/game-1" &&
+#        export build_artifactrepo="artifact-repo" &&
+#        export build_artifactrepo_region="us-central1" &&
+#        export build_staging_composer_env_name="staging-env" &&
+#        export build_staging_composer_region="us-central1" &&
+#        export build_staging_composer_dag_bucket=$(gcloud composer environments describe $build_staging_composer_env_name --location $build_staging_composer_region --format='get(config.dagGcsPrefix)') &&
+#        # export build_staging_composer_service_account=$(gcloud composer environments describe $build_staging_composer_env_name --location $build_staging_composer_region --format='get(config.nodeConfig.serviceAccount)') &&
+#        # export build_composer_dag_name_test="test_game-1_game_event" &&
+#        # export build_staging_project_number="$(gcloud projects describe '${build_staging_gcp_project_id}' --format='get(build_staging_project_number)')" &&
+#        # export build_result_bucket_region="${build_composer_region}" &&
+#        # export build_composer_zone_id="us-central1-a" &&
+#
+#        # write all "build_" variables to the persistent volume "/workspace"
+#        env | grep "^build_" > /workspace/build-utils/build-env-vars
+#    id: "source-environment-variables"
+
+
+
+#  "gcr.io/cloud-builders/bazel:latest"
+  - name: "gcr.io/cloud-marketplace-containers/google/bazel:latest"
+    entrypoint: "/bin/bash"
+    args:
+      - -c
+      - |
+        source /workspace/build-utils/build-env-vars &&
+        bash $build_repo_name/build-utils/build-artifact.sh $build_bazel_workspace
     id: 'build-debian-package'
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        sh $build_repo_name/build-utils/publish-artifact.sh $build_bazel_workspace $build_artifactbucket $build_artifactdir $build_artifactrepo $build_artifact_repo_region
-    id: 'publish-artifact'
-
-  - name: 'gcr.io/cloud-solutions-images/apache-airflow:1.10'
-    entrypoint: 'python'
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        python $build_repo_name/etls/evaluation/game-1/game_event/workflow-dag/test_compare_xcom_maps.py $build_bazel_workspace $build_artifactbucket $build_artifactdir $build_artifactrepo $build_artifact_repo_region
-    id: 'unit-test-on-operator-code'
-
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        sh $build_repo_name/build-utils/load_composer_var.sh
-    id: 'set-composer-variables'
-
-  - name: "gcr.io/cloud-builders/gsutil"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        sh $build_repo_name/etls/evaluation/game-1/game_event/workflow-dag/compare_xcom_maps.py &build_staging_composer_dag_bucket
-    id: 'deploy-custom-operator'
-
-  - name: "gcr.io/cloud-builders/gsutil"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        cp gs://game-1/staging/game-event/* $build_staging_composer_dag_bucket
-    id: 'deploy-processing-pipeline'
-
-  - name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        sh $build_repo_name/buildutils/wait_for_dag_deployed.sh $build_staging_composer_env_name $build_staging_composer_region build_composer_dag_name_test '6' '20'
-    id: 'wait-for-dag-deployed-on-composer'
-
-  - name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: "/bin/bash"
-    args:
-      - -c
-      - |
-        # Read environment variables from disk
-        source /workspace/build-utils/set_vars &&
-        composer environments run $build_staging_composer_env_name --location $build_staging_composer_region trigger_dag -- build_composer_dag_name_test --run_id=$BUILD_ID
-    id: 'trigger-pipeline-execution'
+#  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        sh $build_repo_name/build-utils/publish-artifact.sh $build_bazel_workspace $build_artifactbucket $build_artifactdir $build_artifactrepo $build_artifactrepo_region
+#    id: 'publish-artifact'
+#
+#  - name: 'gcr.io/cloud-solutions-images/apache-airflow:1.10'
+#    entrypoint: 'python'
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        python $build_repo_name/etls/evaluation/game-1/game_event/workflow-dag/test_compare_xcom_maps.py $build_bazel_workspace $build_artifactbucket $build_artifactdir $build_artifactrepo $build_artifact_repo_region
+#    id: 'unit-test-on-operator-code'
+#
+#  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        sh $build_repo_name/build-utils/load_composer_var.sh
+#    id: 'set-composer-variables'
+#
+#  - name: "gcr.io/cloud-builders/gsutil"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        sh $build_repo_name/etls/evaluation/game-1/game_event/workflow-dag/compare_xcom_maps.py &build_staging_composer_dag_bucket
+#    id: 'deploy-custom-operator'
+#
+#  - name: "gcr.io/cloud-builders/gsutil"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        sh $build_repo_name/build-utils/deploy-artifact.sh $build_bazel_workspace $build_artifactdir $build_staging_composer_dag_bucket
+#
+#    id: 'deploy-processing-pipeline'
+#
+#  - name: "gcr.io/cloud-builders/gcloud"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        sh $build_repo_name/buildutils/wait_for_dag_deployed.sh $build_staging_composer_env_name $build_staging_composer_region build_composer_dag_name_test '6' '20'
+#    id: 'wait-for-dag-deployed-on-composer'
+#
+#  - name: "gcr.io/cloud-builders/gcloud"
+#    entrypoint: "/bin/bash"
+#    args:
+#      - -c
+#      - |
+#        # Read environment variables from disk
+#        source /workspace/build-utils/build-env-vars &&
+#        composer environments run $build_staging_composer_env_name --location $build_staging_composer_region trigger_dag -- build_composer_dag_name_test --run_id=$BUILD_ID
+#    id: 'trigger-pipeline-execution'
+#
 

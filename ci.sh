@@ -11,12 +11,37 @@ files=()
 
 for file in $(git show --pretty='format:' --name-only $commit_sha);do
 #for file in */;do
-    echo "hello inside"
-    echo "bazel query ${file}"
-    files+=($(bazel query $file))
-    echo "files:  ${files}"
+  dir=$(dirname "${file}")
 
+  while true
+  do
+    echo "dir is $dir"
+    lines=$(find ${dir} -name "BUILD.bazel"  | wc -l)
+    if [ $lines -eq 0 ]; then
+      echo " Empty ... $dir"
+      dir=$(dirname "${dir}")
+    else
+      echo "not empty ..."
+      target=$dir
+      echo "target is $target"
+      break
+    fi
+  done
+  bazel query 'attr(visibility, "BUILD_VISIBILITY",/$target:*)'
 done
+
+#for file in $(git show --pretty='format:' --name-only $commit_sha);do
+##for file in */;do
+#    echo "hello inside"
+#    bazel query 'attr(visibility, "BUILD_VISIBILITY",//etls/evaluation:*)'
+#    echo "bazel query ${file}"
+#    files+=($(bazel query $file))
+#    echo "files:  ${files}"
+#
+#
+#
+#
+#done
 
 # Query for the associated buildables
 buildables=$(bazel query \
