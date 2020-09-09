@@ -18,11 +18,11 @@ BAZEL_WORKSPACE=${1}
 cd ${BAZEL_WORKSPACE}
 ARTIFACTBUCKET=${2}
 ARTIFACTDIR=${3}
-BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-COMMIT_SHA=$(git rev-parse HEAD)
+BRANCH_NAME=${4}
+COMMIT_SHA=${5}
 ARTIFACTNAME="${BRANCH_NAME}_${COMMIT_SHA}.deb"
-ARTIFACTREPO=${4}
-REGION=${5}
+ARTIFACTREPO=${6}
+REGION=${7}
 
 copy_artifact_to_gcs() {
 #    cd  ${EXECPATH}

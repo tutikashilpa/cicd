@@ -6,15 +6,15 @@
 # for any use or purpose. Your use of it is subject to your agreement with Google.
 
 echo $(pwd)
-cd /workspace/cicd
+cd {1}
 # upload var files for dependecies
-COMPOSER_DATA_FOLDER="/home/airflow/gcs/data"
-COMPOSER_NAME="staging-data-pipeline-composer"
-COMPOSER_LOCATION="us-central1"
-ENV_VARIABLES_JSON_FILE="etls/evaluation/game-1/xxxxxxxxxx/workflow-dag/config/variables.json"
+COMPOSER_DATA_FOLDER={2}
+COMPOSER_NAME={3}
+COMPOSER_LOCATION={4}
+ENV_VARIABLES_JSON_FILE="etls/evaluation/game-1/game-event/workflow-dag/config/variables.json"
 echo $COMPOSER_DATA_FOLDER
 echo $COMPOSER_NAME
-COMPOSER_GCS_BUCKET=$(gcloud composer environments describe ${COMPOSER_NAME} --location ${COMPOSER_LOCATION} | grep 'dagGcsPrefix' | grep -Eo "\S+/")
+COMPOSER_GCS_BUCKET={5}
 
 echo $COMPOSER_GCS_BUCKET
 

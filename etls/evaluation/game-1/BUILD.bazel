@@ -49,7 +49,7 @@ pkg_deb(
 #    cmd = """
 #
 #    source /workspace/build-utils/build_env_vars
-#    cd $${build_bazel_workspace}
+#    cd $${build_workspace}
 #    COMMIT="$$(git rev-parse HEAD)"
 #    BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
 #    mkdir -p "bazel-bin/etls/evaluation/game-1/deb" && cp bazel-bin/etls/evaluation/game-1/game-event.deb $(@D)/deb && mv bazel-bin/etls/evaluation/game-1/deb/game-event bazel-bin/etls/evaluation/game-1/game-event_$${BRANCH}_$${COMMIT}.deb
@@ -64,14 +64,14 @@ genrule(
    cmd = """
         EXECPATH=$$(pwd)
         source /workspace/build-utils/build-env-vars
-        cd $${build_bazel_workspace}
+        cd $${build_workspace}
         # cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
         echo "bazel info $$(bazel info bazel-genfiles)"
-        COMMIT="$$(git rev-parse HEAD)"
-        BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
+        # COMMIT="$$(git rev-parse HEAD)"
+        # BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
         VERSIONTXT="./version.txt"
-        echo -e $${BRANCH}_$${COMMIT} > VERSIONTXT > $@
+        echo -e $${build_branch_name}_$${build_commit} > VERSIONTXT > $@
         """
 )
 #> $@
