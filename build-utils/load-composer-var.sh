@@ -6,7 +6,7 @@
 # for any use or purpose. Your use of it is subject to your agreement with Google.
 
 echo $(pwd)
-cd {1}
+cd cicd
 # upload var files for dependecies
 COMPOSER_DATA_FOLDER={2}
 COMPOSER_NAME={3}
