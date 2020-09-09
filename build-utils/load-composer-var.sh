@@ -6,15 +6,15 @@
 # for any use or purpose. Your use of it is subject to your agreement with Google.
 
 echo $(pwd)
-cd cicd
+cd ${1}
 # upload var files for dependecies
-COMPOSER_DATA_FOLDER={2}
-COMPOSER_NAME={3}
-COMPOSER_LOCATION={4}
+COMPOSER_DATA_FOLDER=${2}
+COMPOSER_NAME=${3}
+COMPOSER_LOCATION=${4}
 ENV_VARIABLES_JSON_FILE="etls/evaluation/game-1/game_event/workflow-dag/config/variables.json"
 echo $COMPOSER_DATA_FOLDER
 echo $COMPOSER_NAME
-COMPOSER_GCS_BUCKET={5}
+COMPOSER_GCS_BUCKET=${5}
 echo $COMPOSER_GCS_BUCKET
 
 $(gsutil cp ${ENV_VARIABLES_JSON_FILE} ${COMPOSER_GCS_BUCKET}data)
