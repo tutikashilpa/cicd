@@ -63,9 +63,10 @@ genrule(
    outs = ["version.txt"],
    cmd = """
         EXECPATH=$$(pwd)
-        source /workspace/build-utils/build_env_vars
+        source /workspace/build-utils/build-env-vars
         cd $${build_bazel_workspace}
         # cd /Users/ext.gampapathini/Documents/git_tutikashilpa/cicd
+        echo "bazel info $$(bazel info bazel-genfiles)"
         COMMIT="$$(git rev-parse HEAD)"
         BRANCH="$$(git rev-parse --abbrev-ref HEAD)"
         cd $${EXECPATH}
